@@ -1,4 +1,6 @@
 using BookManagment.Data;
+using BookManagment.Services;
+using BookManagment.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,13 @@ builder.Services.AddDbContext<EBMDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+builder.Services.AddTransient<IBookService,BookService>();
+builder.Services.AddTransient<IMemberService, MemberService>();
+builder.Services.AddTransient<IAdminService, AdminService>();
+builder.Services.AddTransient<IAuthorService, AuthorService>();
+builder.Services.AddTransient<IPublisherService, PublisherService>();
+builder.Services.AddTransient<IGenreService, GenreService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

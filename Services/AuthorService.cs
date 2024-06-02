@@ -1,6 +1,8 @@
-﻿namespace BookManagment.Services
+﻿using BookManagment.Services.Interfaces;
+
+namespace BookManagment.Services
 {
-    public class AuthorService
+    public class AuthorService:IAuthorService
     {
     }
 }

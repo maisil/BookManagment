@@ -1,6 +1,8 @@
-﻿namespace BookManagment.Services
+﻿using BookManagment.Services.Interfaces;
+
+namespace BookManagment.Services
 {
-    public class MemberService
+    public class MemberService:IMemberService
     {
     }
 }
