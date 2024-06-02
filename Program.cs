@@ -1,8 +1,16 @@
+using BookManagment.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+var connectionString = builder.Configuration.GetConnectionString("AppDBConnection");
+builder.Services.AddDbContext<EBMDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

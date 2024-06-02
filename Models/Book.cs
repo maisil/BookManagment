@@ -24,6 +24,9 @@ namespace BookManagment.Models
         public  Author Author { get; set; }
         public  Publisher Publisher { get; set; }
         public  Genre Genre { get; set; }
+        public ICollection<BookGenre> Genres { get; set; } = [];
+        public ICollection<BookIssue> Members { get; set; } = [];
+
         public Book(string title, string description, string authorId,string publisherId, string isbn, string genreId, DateTime publishDate,string language,string edition,string imgLink,int actualStock,int noOfpages)
         {
             Id = Guid.NewGuid().ToString();

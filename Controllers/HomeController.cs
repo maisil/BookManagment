@@ -1,4 +1,4 @@
-using BookMangment.Models;
+using BookManagment.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

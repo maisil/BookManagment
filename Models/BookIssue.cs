@@ -14,8 +14,8 @@ namespace BookManagment.Models
             public DateTime IssueDate { get; set; }
             [DataType(DataType.Date)]
             public DateTime DueDate { get; set; }
-            public virtual Member Member { get; set; }
-            public virtual Book Book { get; set; }
+            public  Member Member { get; set; }
+            public  Book Book { get; set; }
 
         public BookIssue(string memberId,string bookId,DateTime issueDate,DateTime dueDate)
         {

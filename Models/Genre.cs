@@ -11,6 +11,7 @@ namespace BookManagment.Models
         [Required]
         public string Name { get; set; }
 
+        public ICollection<BookGenre> Books { get; set; } = [];
         public Genre(string name)
         {
             Id = Guid.NewGuid().ToString();
