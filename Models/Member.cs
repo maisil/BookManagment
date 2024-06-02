@@ -24,7 +24,7 @@ namespace BookManagment.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public string AccountStatus { get; set; }
-
+        ICollection<BookIssue> BookIssues { get; set; }
         public Member(string fullName, string email, string password, string? phone, string country,string city,string pincode,string fulladdress,string status)
         {
             Id = Guid.NewGuid().ToString();

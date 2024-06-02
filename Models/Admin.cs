@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookManagment.Models
 {
+    [Index(nameof(UserName), IsUnique = true)]
     public class Admin
     {
         [Key]
