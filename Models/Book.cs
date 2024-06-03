@@ -8,7 +8,7 @@ namespace BookManagment.Models
         public string Id { get; set; }
         public string Title { get; set; }
         public string GenreId { get; set; }
-        public string ISBN { get; set; }
+        public string Isbn { get; set; }
         [DataType(DataType.Date)]
         public DateTime PublishDate { get; set; }
         public string Language { get; set; }
@@ -27,13 +27,13 @@ namespace BookManagment.Models
         public ICollection<BookGenre> Genres { get; set; } = [];
         public ICollection<BookIssue> Members { get; set; } = [];
 
-        public Book(string title, string description, string authorId,string publisherId, string isbn, string genreId, DateTime publishDate,string language,string edition,string imgLink,int actualStock,int noOfpages)
+        public Book(string title, string description, string authorId,string publisherId, string isbn, string genreId, DateTime publishDate,string language,string edition,string imgLink,int actualStock,int noOfPages)
         {
             Id = Guid.NewGuid().ToString();
             Title = title;
             Description = description;
             AuthorId = authorId;
-            ISBN = isbn;
+            Isbn = isbn;
             GenreId = genreId;
             PublishDate = publishDate;
             Language = language;
@@ -41,7 +41,7 @@ namespace BookManagment.Models
             ActualStock = actualStock;
             CurrentStock = actualStock;
             ImgLink = imgLink;
-            NoOfPages = noOfpages;
+            NoOfPages = noOfPages;
             PublisherId = publisherId;
 
 

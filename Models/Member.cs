@@ -18,14 +18,14 @@ namespace BookManagment.Models
         public string Email { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
-        public string Pincode { get; set; }
+        public string PinCode { get; set; }
         public string FullAddress { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public string AccountStatus { get; set; }
         public ICollection<BookIssue> Books { get; set; } = [];
-        public Member(string fullName, string email, string password, string? phone, string country,string city,string pincode,string fulladdress,string status)
+        public Member(string fullName, string email, string password, string? phone, string country,string city,string pinCode,string fullAddress,string accountStatus)
         {
             Id = Guid.NewGuid().ToString();
             FullName = fullName;
@@ -34,9 +34,9 @@ namespace BookManagment.Models
             Phone = phone;
             Country = country;
             City = city;
-            Pincode = pincode;
-            FullAddress = fulladdress;
-            AccountStatus = status;
+            PinCode = pinCode;
+            FullAddress = fullAddress;
+            AccountStatus = accountStatus;
           
         }
     }
