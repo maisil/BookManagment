@@ -14,5 +14,9 @@ namespace BookManagment.Models
             Id = Guid.NewGuid().ToString();
             Name = name;
         }
+        public Publisher()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

@@ -39,5 +39,9 @@ namespace BookManagment.Models
             AccountStatus = accountStatus;
           
         }
+        public Member()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

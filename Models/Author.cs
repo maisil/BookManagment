@@ -14,5 +14,9 @@ namespace BookManagment.Models
             Id = Guid.NewGuid().ToString();
             Name = name;
         }
+        public Author()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

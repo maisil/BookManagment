@@ -20,5 +20,9 @@ namespace BookManagment.Models
             Password = password;
                
         }
+        public Admin()
+        {
+            
+        }
     }
 }

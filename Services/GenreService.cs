@@ -48,5 +48,11 @@ namespace BookManagment.Services
             return genre;
 
         }
+
+        public bool Exist(string id)
+        {
+            return _eBMDbContext.genres.Any(g => g.Id == id);
+        }
+
     }
 }

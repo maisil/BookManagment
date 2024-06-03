@@ -46,5 +46,9 @@ namespace BookManagment.Models
 
 
         }
+        public Book()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 }

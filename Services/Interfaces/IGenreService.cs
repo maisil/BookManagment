@@ -9,5 +9,7 @@ namespace BookManagment.Services.Interfaces
         public void Delete(string Id);
         public IEnumerable<Genre> GetAll();
         public Genre GetById(string id);
+
+        public bool Exist(string id);
     }
 }
