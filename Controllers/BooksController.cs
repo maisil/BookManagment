@@ -54,7 +54,7 @@ namespace BookManagment.Controllers
         {
             ViewData["AuthorId"] = new SelectList(_authorService.GetAll(), "Id", "Id");
             ViewData["GenreId"] = new SelectList(_genreService.GetAll(), "Id", "Id");
-            ViewData["PublisherId"] = new SelectList(_publisherService.getAll(), "Id", "Id");
+            ViewData["PublisherId"] = new SelectList(_publisherService.GetAll(), "Id", "Id");
             return View();
         }
 
@@ -63,17 +63,17 @@ namespace BookManagment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,GenreId,Isbn,PublishDate,Language,Edition,BookCost,NoOfPages,Description,ActualStock,CurrentStock,ImgLink,AuthorId,PublisherId")] Book book)
+        public IActionResult Create([Bind("Title,GenreId,Isbn,PublishDate,Language,Edition,BookCost,NoOfPages,Description,ActualStock,CurrentStock,ImgLink,AuthorId,PublisherId")] Book book)
         {
             if (ModelState.IsValid)
             {
                 _bookService.Add(book);
-                await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.authors, "Id", "Id", book.AuthorId);
-            ViewData["GenreId"] = new SelectList(_context.genres, "Id", "Id", book.GenreId);
-            ViewData["PublisherId"] = new SelectList(_context.publishers, "Id", "Id", book.PublisherId);
+            ViewData["AuthorId"] = new SelectList(_authorService.GetAll(), "Id", "Id", book.AuthorId);
+            ViewData["GenreId"] = new SelectList(_genreService.GetAll(), "Id", "Id", book.GenreId);
+            ViewData["PublisherId"] = new SelectList(_publisherService.GetAll(), "Id", "Id", book.PublisherId);
             return View(book);
         }
 
@@ -90,9 +90,9 @@ namespace BookManagment.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorId"] = new SelectList(_context.authors, "Id", "Id", book.AuthorId);
-            ViewData["GenreId"] = new SelectList(_context.genres, "Id", "Id", book.GenreId);
-            ViewData["PublisherId"] = new SelectList(_context.publishers, "Id", "Id", book.PublisherId);
+            ViewData["AuthorId"] = new SelectList(_authorService.GetAll(), "Id", "Id", book.AuthorId);
+            ViewData["GenreId"] = new SelectList(_genreService.GetAll(), "Id", "Id", book.GenreId);
+            ViewData["PublisherId"] = new SelectList(_publisherService.GetAll(), "Id", "Id", book.PublisherId);
             return View(book);
         }
 
@@ -117,7 +117,7 @@ namespace BookManagment.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_bookService.Exists(book.Id))
+                    if (!BookExists(book.Id))
                     {
                         return NotFound();
                     }
@@ -128,9 +128,9 @@ namespace BookManagment.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthorId"] = new SelectList(_context.authors, "Id", "Id", book.AuthorId);
-            ViewData["GenreId"] = new SelectList(_context.genres, "Id", "Id", book.GenreId);
-            ViewData["PublisherId"] = new SelectList(_context.publishers, "Id", "Id", book.PublisherId);
+            ViewData["AuthorId"] = new SelectList(_authorService.GetAll(), "Id", "Id", book.AuthorId);
+            ViewData["GenreId"] = new SelectList(_genreService.GetAll(), "Id", "Id", book.GenreId);
+            ViewData["PublisherId"] = new SelectList(_publisherService.GetAll(), "Id", "Id", book.PublisherId);
             return View(book);
         }
 

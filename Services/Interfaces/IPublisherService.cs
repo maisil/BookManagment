@@ -4,6 +4,7 @@ namespace BookManagment.Services.Interfaces
 {
     public interface IPublisherService
     {
+       
         public void Add(Publisher publisher);
         public void Update(Publisher publisher);
         public void Delete(string Id);
