@@ -16,11 +16,13 @@ namespace BookManagment.Controllers
         private readonly IGenreService _genreService;
         private readonly IAuthorService _authorService;
         private readonly IBookService _bookService;
-        public BooksController(IBookService bookService, IAuthorService authorService, IGenreService genreService)
+        private readonly IPublisherService _publisherService;
+        public BooksController(IBookService bookService, IAuthorService authorService, IGenreService genreService,IPublisherService publisherService)
         {
             _bookService = bookService;
             _authorService = authorService;
             _genreService = genreService;
+            _publisherService = publisherService;
         }
 
         // GET: Books
@@ -52,7 +54,7 @@ namespace BookManagment.Controllers
         {
             ViewData["AuthorId"] = new SelectList(_authorService.GetAll(), "Id", "Id");
             ViewData["GenreId"] = new SelectList(_genreService.GetAll(), "Id", "Id");
-            ViewData["PublisherId"] = new SelectList(_context.publishers, "Id", "Id");
+            ViewData["PublisherId"] = new SelectList(_publisherService.getAll(), "Id", "Id");
             return View();
         }
 
@@ -61,11 +63,11 @@ namespace BookManagment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,GenreId,Isbn,PublishDate,Language,Edition,BookCost,NoOfPages,Description,ActualStock,CurrentStock,ImgLink,AuthorId,PublisherId")] Book book)
+        public async Task<IActionResult> Create([Bind("Title,GenreId,Isbn,PublishDate,Language,Edition,BookCost,NoOfPages,Description,ActualStock,CurrentStock,ImgLink,AuthorId,PublisherId")] Book book)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
+                _bookService.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -76,14 +78,14 @@ namespace BookManagment.Controllers
         }
 
         // GET: Books/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.books.FindAsync(id);
+            var book = _bookService.GetById(id);
             if (book == null)
             {
                 return NotFound();
@@ -99,7 +101,7 @@ namespace BookManagment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Title,GenreId,Isbn,PublishDate,Language,Edition,BookCost,NoOfPages,Description,ActualStock,CurrentStock,ImgLink,AuthorId,PublisherId")] Book book)
+        public IActionResult Edit(string id, [Bind("Id,Title,GenreId,Isbn,PublishDate,Language,Edition,BookCost,NoOfPages,Description,ActualStock,CurrentStock,ImgLink,AuthorId,PublisherId")] Book book)
         {
             if (id != book.Id)
             {
@@ -110,12 +112,12 @@ namespace BookManagment.Controllers
             {
                 try
                 {
-                    _context.Update(book);
-                    await _context.SaveChangesAsync();
+                    _bookService.Update(book);
+                   
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Id))
+                    if (!_bookService.Exists(book.Id))
                     {
                         return NotFound();
                     }
@@ -133,18 +135,15 @@ namespace BookManagment.Controllers
         }
 
         // GET: Books/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.books
-                .Include(b => b.Author)
-                .Include(b => b.Genre)
-                .Include(b => b.Publisher)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var book = _bookService.GetById(id);
+           
             if (book == null)
             {
                 return NotFound();
@@ -156,21 +155,22 @@ namespace BookManagment.Controllers
         // POST: Books/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public IActionResult DeleteConfirmed(string id)
         {
-            var book = await _context.books.FindAsync(id);
+            var book = _bookService.GetById(id);
             if (book != null)
             {
-                _context.books.Remove(book);
+               _bookService.Delete(id);
             }
 
-            await _context.SaveChangesAsync();
+           
             return RedirectToAction(nameof(Index));
         }
 
         private bool BookExists(string id)
         {
-            return _context.books.Any(e => e.Id == id);
+            var book = _bookService.GetById(id);
+            return book != null ;
         }
     }
 }
